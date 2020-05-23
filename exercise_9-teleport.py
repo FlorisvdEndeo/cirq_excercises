@@ -29,8 +29,6 @@ def teleport_bob(qubit_epr_bob, measurement_outcomes):
     za = cirq.Z**measurement_outcomes['z']
     circuit.append(za(qubit_epr_bob))
     circuit.append(xa(qubit_epr_bob))
-
-    #notcorrectyetbutcan'tbearsed
     return circuit
 
 
