@@ -8,14 +8,10 @@ from qiskit.tools.visualization import plot_histogram, plot_state_city
 
 
 # Construct a quantum circuit that initialises qubits to a custom state
-circ = QuantumCircuit(2, 2)
-circ.initialize([1, 0, 0, 1] / np.sqrt(2), [0, 1])
-circ.measure([0,1], [0,1])
+circuit = QuantumCircuit(9)
 
-# Select the QasmSimulator from the Aer provider
-simulator = Aer.get_backend('qasm_simulator')
-
-# Execute and get counts
-result = execute(circ, simulator).result()
-counts = result.get_counts(circ)
-plot_histogram(counts, title="Bell initial statevector")
+for qubit in range(3)
+    circuit.h(qubit)
+#0 to 3, physical QuantumRegister
+#4 to 7 ancillary
+# 8 and 9 aux estimation

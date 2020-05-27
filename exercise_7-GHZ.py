@@ -4,10 +4,9 @@ import cirq
 def create_GHZ_state(qubits):
     circuit = cirq.Circuit()
     circuit.append(cirq.H(cirq.GridQubit(0, 0)))
-    circuit.append(cirq.CNOT(cirq.GridQubit(0, 0), cirq.GridQubit(0, 1)))
-    circuit.append(cirq.CNOT(cirq.GridQubit(0, 1), cirq.GridQubit(0, 2)))
-    circuit.append(cirq.CNOT(cirq.GridQubit(0, 2), cirq.GridQubit(0, 3)))
-    circuit.append(cirq.CNOT(cirq.GridQubit(0, 3), cirq.GridQubit(0, 4)))
+    for q1, q2 in zip(qubits, qubits[1:]):
+        circuit.append(cirq.CNOT(q1, q2))
+
     return circuit
 
 

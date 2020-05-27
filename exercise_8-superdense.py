@@ -24,7 +24,6 @@ def decode(qubit_alice, qubit_bob):
     circuit.append(cirq.measure(qubit_alice, key = 'z'))
     circuit.append(cirq.measure(qubit_bob, key = 'x'))
 
-
     return circuit
 
 

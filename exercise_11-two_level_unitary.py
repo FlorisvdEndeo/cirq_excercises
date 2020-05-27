@@ -1,20 +1,21 @@
 import cirq
 
 def two_level_unitary(cU, qubits):
-    circuit = cirq.Circuit()
-
-    # +------------------------+
-    # |Type your solution below|
-    # +------------------------+
-
-
-
-    # +------------------------+
-    # |Type your solution above|
-    # +------------------------+
-
-    return circuit
-
+    return cirq.Circuit(
+        cirq.CNOT(qubits[0], qubits[6]),
+        cirq.CNOT(qubits[5], qubits[0]),
+        cirq.CNOT(qubits[6], qubits[2]),
+        cirq.CNOT(qubits[6], qubits[4]),
+        cirq.CNOT(qubits[6], qubits[5]),
+        cirq.X(qubits[3]),
+        cU.all_operations(),
+        cirq.X(qubits[3]),
+        cirq.CNOT(qubits[6], qubits[5]),
+        cirq.CNOT(qubits[6], qubits[4]),
+        cirq.CNOT(qubits[6], qubits[2]),
+        cirq.CNOT(qubits[5], qubits[0]),
+        cirq.CNOT(qubits[0], qubits[6]),
+    )
 if __name__ == "__main__":
     i,j = 0b0110010,0b1100100
     import numpy as np
@@ -30,7 +31,7 @@ if __name__ == "__main__":
     cU = reduce(lambda x,_ : cirq.ControlledGate(x), qubits[:-1], sqU)
     cU_circuit.append(cU(*qubits))
     circuit = two_level_unitary(cU_circuit, qubits)
-    C = circuit.to_unitary_matrix()
+    C = circuit.unitary()
     non_trivial_entries = {}
     for k,l in it.product(*map(range, C.shape)):
         if (k == l and abs(C[k,l] - 1.) > 1e-4) or (k != l and abs(C[k,l]) > 1e-4):
