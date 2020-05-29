@@ -1,8 +1,8 @@
 import cirq
 
 def or3(cq1, cq2, cq3, tq):
-    aux1 = cirq.GridQubit(0,4)
-    aux2 = cirq.GridQubit(0,5)
+    aux1 = cirq.GridQubit(1,0)
+    aux2 = cirq.GridQubit(1,1)
 
     return cirq.Circuit(
         cirq.X(cq1),
@@ -10,12 +10,18 @@ def or3(cq1, cq2, cq3, tq):
         cirq.X(cq3),
         cirq.TOFFOLI(cq1, cq2, aux1),
         cirq.TOFFOLI(cq3, aux1, aux2),
-        cirq.X(cq1),
-        cirq.X(cq2),
-        cirq.X(cq3),
         cirq.X(aux2),
         cirq.CNOT(aux2, tq),
+        cirq.X(aux2),
+        cirq.TOFFOLI(cq3, aux1, aux2),
+        cirq.TOFFOLI(cq1, cq2, aux1),
+        cirq.X(cq3),
+        cirq.X(cq2),
+        cirq.X(cq1),
     )
+
+
+
 if __name__ == "__main__":
     cq1 = cirq.GridQubit(0, 0)
     cq2 = cirq.GridQubit(0, 1)

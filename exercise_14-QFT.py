@@ -2,21 +2,19 @@ import cirq
 
 def QFT(qubits):
     circuit = cirq.Circuit()
-    # circuit.append(cirq.H(qubits[0]))
-    # circuit.append(cirq.CZ(qubits[0], qubits[1])**0.5)
-    # circuit.append(cirq.CZ(qubits[0], qubits[2])**0.25)
-    # circuit.append(cirq.H(qubits[1]))
-    # circuit.append(cirq.CZ(qubits[1], qubits[2])**0.5)
-    # circuit.append(cirq.H(qubits[2]))
-    # circuit.append(cirq.SWAP(qubits[0], qubits[2]))
-    n = len(qubits)
-    for qubit in qubits:
-        circuit.append(cirq.H(qubit))
-        i = 1
-        for target in qubits[(qubits).index(qubit)+1:]:
-            circuit.append(cirq.CZ(qubit, target)**(0.5**i))
-            i += 1
-    circuit.append(cirq.SWAP(qubits[0], qubits[n-1]))
+
+    for i, bit1 in enumerate(qubits,1):
+        circuit.append(cirq.H(bit1))
+        for j, bit2 in enumerate(qubits[i:],1):
+            circuit.append(cirq.CZ(bit1, bit2)**(0.5**j))
+
+    for bit1, bit2 in zip(qubits[:len(qubits)//2], qubits[:len(qubits)//2-1:-1]):
+        circuit.append([
+            cirq.CNOT(bit1, bit2),
+            cirq.CNOT(bit2, bit1),
+            cirq.CNOT(bit1, bit2),
+        ])
+
     return circuit
 
 if __name__ == "__main__":

@@ -2,16 +2,14 @@ import cirq
 
 
 def or2(cq1, cq2, tq):
-    circuit = cirq.Circuit()
-    auxqubit = cirq.GridQubit(1,3)
-    circuit.append(cirq.X(cq1))
-    circuit.append(cirq.X(cq2))
-    circuit.append(cirq.TOFFOLI(cq1, cq2, auxqubit))
-    circuit.append(cirq.CNOT(auxqubit, tq))
-    circuit.append(cirq.X(cq1))
-    circuit.append(cirq.X(cq2))
-    circuit.append(cirq.X(tq))
-    return circuit
+    return cirq.Circuit(
+        cirq.X(cq1),
+        cirq.X(cq2),
+        cirq.TOFFOLI(cq1, cq2, tq),
+        cirq.X(cq1),
+        cirq.X(cq2),
+        cirq.X(tq),
+    )
 
 
 if __name__ == "__main__":
